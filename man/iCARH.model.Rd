@@ -4,7 +4,8 @@
 \alias{iCARH.model}
 \title{Runs the integrative CAR Horseshoe model}
 \usage{
-iCARH.model(X, Y, drug, pathways, tau = 1.2, NA_value = -99999, ...)
+iCARH.model(X, Y, drug, groups = NULL, pathways, tau = 1.2,
+  NA_value = -99999, init = T, ...)
 }
 \arguments{
 \item{X}{the metabolomics time-course data}
@@ -13,12 +14,17 @@ iCARH.model(X, Y, drug, pathways, tau = 1.2, NA_value = -99999, ...)
 
 \item{drug}{treatment effect (NA values not allowed in drug).}
 
+\item{groups}{grouping vector (discrete)}
+
 \item{pathways}{pathway adjacency matrices}
 
 \item{tau}{global sparsity parameter \eqn{\tau} as in Jendoubi, T., & Ebbels, T. (2018)}
 
 \item{NA_value}{NA values are incompatible with stan.
 NAs will be replaced by NA_value and will be inferred (only for X and Y data).}
+
+\item{init}{If \code{TRUE} use iCARH provided initialization function. Passed to Stan otherwise. Please see Stan manual 
+on \code{init} possible values.}
 
 \item{...}{additional stan parameters}
 }

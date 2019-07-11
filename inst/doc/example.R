@@ -39,11 +39,16 @@ for(i in 1:Tp) print(sum(abs(cor(XX[i,,])[which(adjmat>0)])<cor.thresh))
 rstan::rstan_options(auto_write = TRUE)
 options(mc.cores = 2)
 # For testing, does not converge
-fit.sim = iCARH.model(XX, Y, Z, pathways, control = list(max_treedepth=8),
-                     iter = 4, chains = 1, pars=c("YY","Xmis","Ymis"), include=F)
+fit.sim = iCARH.model(XX, Y, Z, groups=rep(c(0,1), each=5), pathways = pathways, control = list(max_treedepth=8),
+                     iter = 4, chains = 1)
 # Not run
 # fit.sim = iCARH.model(XX, Y, Z, pathways, control = list(adapt_delta = 0.99, max_treedepth=10),
 #                      iter = 2000, chains = 2, pars=c("YY","Xmis","Ymis"), include=F)
+
+## ------------------------------------------------------------------------
+if(!is.null(fit.sim)){
+  rhats = iCARH.checkRhats(fit.sim)
+}
 
 ## ------------------------------------------------------------------------
 if(!is.null(fit.sim)){
@@ -77,7 +82,12 @@ if(!is.null(fit.sim)){
 
 ## ------------------------------------------------------------------------
 if(!is.null(fit.sim)){
-  mad = iCARH.mad(fit.sim, XX)
+  mad = iCARH.mad(fit.sim)
   quantile(mad)
+}
+
+## ------------------------------------------------------------------------
+if(!is.null(fit.sim)){
+  imp = iCARH.getDataImputation(fit.sim)
 }
 

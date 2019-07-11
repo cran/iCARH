@@ -4,6 +4,8 @@
 \alias{iCARH.plotBeta}
 \alias{iCARH.plotTreatmentEffect}
 \alias{iCARH.plotPathwayPerturbation}
+\alias{iCARH.plotDataImputation}
+\alias{iCARH.checkRhats}
 \alias{iCARH.checkNormality}
 \alias{iCARH.waic}
 \alias{iCARH.mad}
@@ -15,14 +17,19 @@ iCARH.plotTreatmentEffect(fit, indx = TRUE)
 
 iCARH.plotPathwayPerturbation(fit, path.names, indpath = TRUE)
 
+iCARH.plotDataImputation(fit, indx = T, indy = T, plotx = T,
+  ploty = T, ...)
+
+iCARH.checkRhats(fit)
+
 iCARH.checkNormality(fit)
 
 iCARH.waic(fit)
 
-iCARH.mad(fit, X)
+iCARH.mad(fit)
 }
 \arguments{
-\item{fit}{stan object}
+\item{fit}{object returned by iCARH.model}
 
 \item{indx}{vector to specify X variables to plot. Selects all variables of X by default.}
 
@@ -32,11 +39,16 @@ iCARH.mad(fit, X)
 
 \item{indpath}{vector to specify pathways to plot. Selects all pathways by default.}
 
-\item{X}{the metabolomics time-course data}
+\item{plotx}{plot X data imputation?}
+
+\item{ploty}{plot Y data imputation?}
+
+\item{...}{passed to ggplot2::geom_violin}
 }
 \value{
 the \code{iCARH.plot[*]} functions return a ggplot graph object. \code{iCARH.checkNormality} returns the normalized data.
-\code{iCARH.waic} and \code{iCARH.mad} return corresponding waic (scalar) and mad (vector of \eqn{J*(J+1)/2}) values
+\code{iCARH.waic} and \code{iCARH.mad} return corresponding waic (scalar) and mad (vector of \eqn{J*(J+1)/2}) values. 
+\code{iCARH.checkRhats} checks model convergence.
 }
 \description{
 Group of functions to postprocess and plot model parameters of interest, compute WAIC
@@ -50,6 +62,10 @@ and check normality assumptions.
 \item \code{iCARH.plotTreatmentEffect}: Plot boxplots of posterior densities of treatment effect coefficients.
 
 \item \code{iCARH.plotPathwayPerturbation}: Plot posterior densities of pathway perturbation parameters
+
+\item \code{iCARH.plotDataImputation}: Plot imputed values
+
+\item \code{iCARH.checkRhats}: check model convergence and return Rhat coefficients
 
 \item \code{iCARH.checkNormality}: Check normality assumptions. Returns normalized data
 and performs quantile-quantile plot
