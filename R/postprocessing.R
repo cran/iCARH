@@ -56,6 +56,26 @@ iCARH.plotBeta = function(fit, indx=TRUE, indy=TRUE){
   return(gg)
 }
 
+#' @describeIn iCARH.plotARCoef Plot boxplots of posterior densities of theta (time effect) coefficients.
+#' @export iCARH.plotARCoeff
+
+iCARH.plotARCoeff = function(fit, indx=TRUE){
+  X=value=NULL
+  gam1 = iCARH.getARCoeff(fit)
+  gamdf1 = reshape2::melt(gam1[,indx, drop=F], varnames = c("mcmc","X"))
+  gamdf1$X = as.factor(gamdf1$X)
+  gg=ggplot(data=gamdf1, aes(y = value, x = X)) +
+    geom_boxplot(outlier.shape = NA, fill="grey") + geom_hline(yintercept = 0) +
+    theme(axis.text.x = element_text(angle = 90, hjust = 1, size=10, face="bold"),
+          axis.text.y = element_text(size=15, face="bold"),
+          axis.title=element_text(size=20,face="bold"),
+          strip.text.x = element_text(size = 20, face="bold"),
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+          panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+    ylab(expression(bold(theta)))
+  return(gg)
+}
+
 #' @describeIn iCARH.plotBeta Plot boxplots of posterior densities of treatment effect coefficients.
 #' @export iCARH.plotTreatmentEffect
 
