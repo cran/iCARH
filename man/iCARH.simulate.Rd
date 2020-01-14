@@ -4,10 +4,24 @@
 \alias{iCARH.simulate}
 \title{Simulates longitudinal data based on the iCARH model.}
 \usage{
-iCARH.simulate(Tp, N, J, P, K, path.names = NULL, path.probs = FALSE,
-  pathway.perturb.ratio = 0.5, Ygroupeff = NULL, Zgroupeff = NULL,
-  fe = 0, num.corr.y = 0, beta.val = NULL, sigma2 = 1, arz = 0.7,
-  sdx = 0.01)
+iCARH.simulate(
+  Tp,
+  N,
+  J,
+  P,
+  K,
+  path.names = NULL,
+  path.probs = FALSE,
+  pathway.perturb.ratio = 0.5,
+  Ygroupeff = NULL,
+  Zgroupeff = NULL,
+  fe = 0,
+  num.corr.y = 0,
+  beta.val = NULL,
+  sigma2 = 1,
+  arz = 0.7,
+  sdx = 0.01
+)
 }
 \arguments{
 \item{Tp}{number of time points}

@@ -28,8 +28,8 @@
 #' \donttest{
 #' rstan_options(auto_write = TRUE)
 #' options(mc.cores = 2)
-#' fit = iCARH.model(XX, Y, Z, pathways, control = list(adapt_delta = 0.99, max_treedepth=10),
-#' iter = 2, chains = 2)
+#' fit = iCARH.model(XX, Y, Z, groups=rep(c(0,1), each=5), pathways, 
+#' control = list(adapt_delta = 0.99, max_treedepth=10), iter = 2, chains = 2)
 #' if(!is.null(fit))
 #' gplot = iCARH.plotBeta(fit, indx=1:3, indy=1:2)}
 #'
@@ -56,7 +56,7 @@ iCARH.plotBeta = function(fit, indx=TRUE, indy=TRUE){
   return(gg)
 }
 
-#' @describeIn iCARH.plotARCoef Plot boxplots of posterior densities of theta (time effect) coefficients.
+#' @describeIn iCARH.plotBeta Plot boxplots of posterior densities of theta (time effect) coefficients.
 #' @export iCARH.plotARCoeff
 
 iCARH.plotARCoeff = function(fit, indx=TRUE){

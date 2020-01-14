@@ -201,6 +201,41 @@ hr {
 </head>
 
 <body>
+<pre><code class="r">library(iCARH)
+</code></pre>
+
+<pre><code>## Loading required package: rstan
+</code></pre>
+
+<pre><code>## Loading required package: StanHeaders
+</code></pre>
+
+<pre><code>## Loading required package: ggplot2
+</code></pre>
+
+<pre><code>## rstan (Version 2.19.2, GitRev: 2e1f913d3ca3)
+</code></pre>
+
+<pre><code>## For execution on a local, multicore CPU with excess RAM we recommend calling
+## options(mc.cores = parallel::detectCores()).
+## To avoid recompilation of unchanged Stan programs, we recommend calling
+## rstan_options(auto_write = TRUE)
+</code></pre>
+
+<pre><code>## Loading required package: MASS
+</code></pre>
+
+<pre><code class="r">library(abind)
+
+Tp=4 # timepoints
+N=10 # number of samples
+J=14 # number of metabolites
+K=2  # number of bacteria species
+P=8  # number of pathways
+
+set.seed(12473)
+</code></pre>
+
 <p>For real data
  Build pathway matrices using iCARH.getPathwaysMat. Elements in KEGG id list may contain multiple KEGG ids per metabolite. If KEGG id unknown : &ldquo;Unk[number]&rdquo;.</p>
 
@@ -268,8 +303,8 @@ fit.sim = iCARH.model(XX, Y, Z, groups=rep(c(0,1), each=5), pathways = pathways,
 ## 
 ## SAMPLING FOR MODEL &#39;iCARH&#39; NOW (CHAIN 1).
 ## Chain 1: 
-## Chain 1: Gradient evaluation took 0.001959 seconds
-## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 19.59 seconds.
+## Chain 1: Gradient evaluation took 0.001574 seconds
+## Chain 1: 1000 transitions using 10 leapfrog steps per transition would take 15.74 seconds.
 ## Chain 1: Adjust your expectations accordingly!
 ## Chain 1: 
 ## Chain 1: 
@@ -281,9 +316,9 @@ fit.sim = iCARH.model(XX, Y, Z, groups=rep(c(0,1), each=5), pathways = pathways,
 ## Chain 1: Iteration: 3 / 4 [ 75%]  (Sampling)
 ## Chain 1: Iteration: 4 / 4 [100%]  (Sampling)
 ## Chain 1: 
-## Chain 1:  Elapsed Time: 0.009264 seconds (Warm-up)
-## Chain 1:                0.003827 seconds (Sampling)
-## Chain 1:                0.013091 seconds (Total)
+## Chain 1:  Elapsed Time: 0.010449 seconds (Warm-up)
+## Chain 1:                0.003731 seconds (Sampling)
+## Chain 1:                0.01418 seconds (Total)
 ## Chain 1:
 </code></pre>
 

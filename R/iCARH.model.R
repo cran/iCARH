@@ -27,8 +27,8 @@
 #' \donttest{
 #' rstan_options(auto_write = TRUE)
 #' options(mc.cores = 2)
-#' fit = iCARH.model(XX, Y, Z, pathways, control = list(adapt_delta = 0.99, max_treedepth=10),
-#' iter = 2, chains = 2)}
+#' fit = iCARH.model(XX, Y, Z,groups=rep(c(0,1), each=4), pathways,
+#'  control = list(adapt_delta = 0.99, max_treedepth=10), iter = 2, chains = 2)}
 #'
 #' @export iCARH.model
 #' @importFrom rstan stan

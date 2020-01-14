@@ -4,19 +4,28 @@
 \alias{iCARH.model}
 \title{Runs the integrative CAR Horseshoe model}
 \usage{
-iCARH.model(X, Y, drug, groups = NULL, pathways, tau = 1.2,
-  NA_value = -99999, init = T, ...)
+iCARH.model(
+  X,
+  Y,
+  drug,
+  groups = NULL,
+  pathways,
+  tau = 1.2,
+  NA_value = -99999,
+  init = T,
+  ...
+)
 }
 \arguments{
-\item{X}{the metabolomics time-course data}
+\item{X}{the metabolomics time-course data with dimensions timepoints x observations x variables}
 
-\item{Y}{the additional omic time-course data}
+\item{Y}{the additional omic time-course data with dimensions timepoints x observations x variables}
 
-\item{drug}{treatment effect (NA values not allowed in drug).}
+\item{drug}{treatment effect (NA values not allowed in drug) with dimensions timepoints x observations}
 
-\item{groups}{grouping vector (discrete)}
+\item{groups}{grouping vector (binary).}
 
-\item{pathways}{pathway adjacency matrices}
+\item{pathways}{pathway adjacency matrices as returned by iCARH.getPathwaysMat}
 
 \item{tau}{global sparsity parameter \eqn{\tau} as in Jendoubi, T., & Ebbels, T. (2018)}
 
@@ -46,7 +55,7 @@ pathways = data.sim$pathways
 \donttest{
 rstan_options(auto_write = TRUE)
 options(mc.cores = 2)
-fit = iCARH.model(XX, Y, Z, pathways, control = list(adapt_delta = 0.99, max_treedepth=10),
-iter = 2, chains = 2)}
+fit = iCARH.model(XX, Y, Z,groups=rep(c(0,1), each=4), pathways,
+ control = list(adapt_delta = 0.99, max_treedepth=10), iter = 2, chains = 2)}
 
 }

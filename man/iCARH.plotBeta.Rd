@@ -2,6 +2,7 @@
 % Please edit documentation in R/postprocessing.R
 \name{iCARH.plotBeta}
 \alias{iCARH.plotBeta}
+\alias{iCARH.plotARCoeff}
 \alias{iCARH.plotTreatmentEffect}
 \alias{iCARH.plotPathwayPerturbation}
 \alias{iCARH.plotDataImputation}
@@ -13,12 +14,13 @@
 \usage{
 iCARH.plotBeta(fit, indx = TRUE, indy = TRUE)
 
+iCARH.plotARCoeff(fit, indx = TRUE)
+
 iCARH.plotTreatmentEffect(fit, indx = TRUE)
 
 iCARH.plotPathwayPerturbation(fit, path.names, indpath = TRUE)
 
-iCARH.plotDataImputation(fit, indx = T, indy = T, plotx = T,
-  ploty = T, ...)
+iCARH.plotDataImputation(fit, indx = T, indy = T, plotx = T, ploty = T, ...)
 
 iCARH.checkRhats(fit)
 
@@ -59,6 +61,8 @@ and check normality assumptions.
 \itemize{
 \item \code{iCARH.plotBeta}: Plot boxplots of posterior densities of \eqn{\beta} coefficients.
 
+\item \code{iCARH.plotARCoeff}: Plot boxplots of posterior densities of theta (time effect) coefficients.
+
 \item \code{iCARH.plotTreatmentEffect}: Plot boxplots of posterior densities of treatment effect coefficients.
 
 \item \code{iCARH.plotPathwayPerturbation}: Plot posterior densities of pathway perturbation parameters
@@ -86,8 +90,8 @@ pathways = data.sim$pathways
 \donttest{
 rstan_options(auto_write = TRUE)
 options(mc.cores = 2)
-fit = iCARH.model(XX, Y, Z, pathways, control = list(adapt_delta = 0.99, max_treedepth=10),
-iter = 2, chains = 2)
+fit = iCARH.model(XX, Y, Z, groups=rep(c(0,1), each=5), pathways, 
+control = list(adapt_delta = 0.99, max_treedepth=10), iter = 2, chains = 2)
 if(!is.null(fit))
 gplot = iCARH.plotBeta(fit, indx=1:3, indy=1:2)}
 

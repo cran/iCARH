@@ -1,6 +1,6 @@
 Package: iCARH
-Version: 2.0.1
-Date: 2019-12-06
+Version: 2.0.1.1
+Date: 2020-12-01
 Title: Integrative Conditional Autoregressive Horseshoe Model
 Authors@R: c(person("Takoua", "Jendoubi", role = c("aut", "cre"), email = "t.jendoubi14@imperial.ac.uk"), person("Timothy M.D.", "Ebbels", role = c("aut"), email = "t.ebbels@imperial.ac.uk") )
 Description: Implements the integrative conditional autoregressive horseshoe model 
@@ -17,12 +17,12 @@ Imports: RCurl, KEGGgraph, igraph, reshape2, mc2d, abind, Matrix
 Suggests: knitr, rmarkdown
 VignetteBuilder: knitr
 License: GPL (>= 3)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.0
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2019-12-06 09:30:22 UTC; takoua
+Packaged: 2020-01-13 23:05:06 UTC; takoua
 Author: Takoua Jendoubi [aut, cre],
   Timothy M.D. Ebbels [aut]
 Maintainer: Takoua Jendoubi <t.jendoubi14@imperial.ac.uk>
 Repository: CRAN
-Date/Publication: 2019-12-06 11:10:02 UTC
+Date/Publication: 2020-01-14 06:00:02 UTC
