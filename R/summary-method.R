@@ -13,7 +13,7 @@
 #'  defaults to 2. The effective sample size is always rounded to integers.
 #' @param ... not used currently
 #'
-#' @return contain summaries for for all chains. Included in the summaries are means, standard deviations (Est.Error), effective sample sizes (Eff.Sample), and split Rhats. 
+#' @return contain summaries for all chains. Included in the summaries are means, standard deviations (Est.Error), effective sample sizes (Eff.Sample), and split Rhats. 
 #' Monte Carlo standard errors (MC.Error) are also reported.
 #'
 #' @examples data.sim = iCARH.simulate(4, 10, 14, 8, 2, path.probs=0.3, Zgroupeff=c(0,4),
@@ -66,7 +66,7 @@ iCARH.params <- function(fit, pars=c("theta","alpha","beta","phi"), path.names=N
     colnames(treat) = colnames(fit_summary)
     print(treat, digits=digits)
   }
-  if("beta" %in% pars){
+  if(("beta" %in% pars) & !is.null(fit$Y) ){
     cat("\nEffect of Y variables (beta):\n")
     yeff = fit_summary[grepl("^beta\\[([0-9]+,*)*\\]$",rownames(fit_summary)),]
     rownames(yeff) = paste0(rep(xnames, each=length(ynames)),"/",ynames)

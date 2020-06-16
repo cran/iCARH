@@ -6,7 +6,7 @@
 \usage{
 iCARH.model(
   X,
-  Y,
+  Y = NULL,
   drug,
   groups = NULL,
   pathways,
@@ -21,15 +21,17 @@ iCARH.model(
 
 \item{Y}{the additional omic time-course data with dimensions timepoints x observations x variables}
 
-\item{drug}{treatment effect (NA values not allowed in drug) with dimensions timepoints x observations}
+\item{drug}{treatment effect. Could be either continuous (an administered drug or other external factor) or
+binary (cases vs controls). In the binary case the \code{groups} argument can be safely removed.
+NA values not allowed in \code{drug}. Dimensions are timepoints x observations}
 
-\item{groups}{grouping vector (binary).}
+\item{groups}{grouping vector (binary). Use when \code{drug} is continuous.}
 
 \item{pathways}{pathway adjacency matrices as returned by iCARH.getPathwaysMat}
 
 \item{tau}{global sparsity parameter \eqn{\tau} as in Jendoubi, T., & Ebbels, T. (2018)}
 
-\item{NA_value}{NA values are incompatible with stan.
+\item{NA_value}{NA values are incompatible with stan. This is a wrapper to encode missing values in \code{X} and \code{Y}. 
 NAs will be replaced by NA_value and will be inferred (only for X and Y data).}
 
 \item{init}{If \code{TRUE} use iCARH provided initialization function. Passed to Stan otherwise. Please see Stan manual 

@@ -77,12 +77,19 @@ iCARH.getPathwaysCoeff = function(fit, path.names=NULL){
 #' @export iCARH.getDataImputation
 
 iCARH.getDataImputation = function(fit){
-  XX= extract(fit$icarh, inc_warmup = FALSE, pars="XX")$XX
-  attr(XX, "dimnames")[2:4] = dimnames(fit$X)
-  YY= extract(fit$icarh, inc_warmup = FALSE, pars="YY")$YY
-  attr(YY, "dimnames")[2:4] = dimnames(fit$Y)
-  names(dimnames(XX))=c("iterations", "timepoints", "obs", "variables")
-  names(dimnames(YY))=c("iterations", "timepoints", "obs", "variables")
+  stopifnot(any(is.na(fit$X))|any(is.na(fit$Y)))
+  YY = NULL
+  XX = NULL
+  if(any(is.na(fit$X))){
+    XX = extract(fit$icarh, inc_warmup=F, pars="XX")$XX
+    attr(XX, "dimnames")[2:4] = dimnames(fit$X)
+    names(dimnames(XX))=c("iterations", "timepoints", "observations", "variables") 
+  }
+  if(!is.null(fit$Y) & any(is.na(fit$Y))){
+    YY = extract(fit$icarh, inc_warmup=F, pars="YY")$YY
+    attr(YY, "dimnames")[2:4] = dimnames(fit$Y)
+    names(dimnames(YY))=c("iterations", "timepoints", "observations", "variables")
+  }
   return(list(X=XX, Y=YY))
 }
 

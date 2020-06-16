@@ -141,9 +141,18 @@ iCARH.plotPathwayPerturbation = function(fit, path.names, indpath=TRUE){
 #' @export iCARH.plotDataImputation
 #'
 iCARH.plotDataImputation = function(fit, indx=T, indy=T, plotx=T, ploty=T, ...){
+  
+  stopifnot(any(is.na(fit$X))|any(is.na(fit$Y)))
+  
+  stopifnot(!is.null(fit$Y) | !ploty)
+  
+  stopifnot(!any(is.na(fit$Y)) | !ploty)
+  
+  stopifnot(!any(is.na(fit$X)) | !plotx)
+  
   impdata = iCARH.getDataImputation(fit)
-  XX = impdata$X[,,,indx, drop=F]
-  YY = impdata$Y[,,,indy, drop=F]
+  if(any(is.na(fit$X))) XX = impdata$X[,,,indx, drop=F]
+  if(!is.null(fit$Y) & any(is.na(fit$Y))) YY = impdata$Y[,,,indy, drop=F]
   IT = nrow(XX)
 
   missplot = function(Xmis, X){
@@ -185,9 +194,9 @@ iCARH.plotDataImputation = function(fit, indx=T, indy=T, plotx=T, ploty=T, ...){
 
   grx=NULL
   gry=NULL
-  if(plotx)
+  if(plotx & any(is.na(fit$X)))
     grx = missplot(XX, fit$X[,,indx, drop=F])
-  if(ploty)
+  if(ploty & !is.null(fit$Y) & any(is.na(fit$Y)))
     gry = missplot(YY, fit$Y[,,indy, drop=F])
 
   return(list(grx=grx,gry=gry))
@@ -199,8 +208,8 @@ iCARH.plotDataImputation = function(fit, indx=T, indy=T, plotx=T, ploty=T, ...){
 iCARH.checkRhats = function(fit){
   fit_summary = summary(fit$icarh)$summary
   Rhats <- fit_summary[, "Rhat"]
-  if (any(Rhats > 1.1, na.rm = TRUE))
-    warning("Some Rhats are > 1.1 ! The model has not converged! Results may not be valid!")
+  if (any(Rhats > 1.1, na.rm = TRUE) | any(is.nan(Rhats)))
+    warning("Some Rhats are not < 1.1 ! The model has not converged! Results may not be valid!")
   else
     cat("Rhat values do not indicate any problems.")
   return(Rhats)
@@ -214,7 +223,9 @@ iCARH.checkRhats = function(fit){
 iCARH.checkNormality = function(fit){
   mu = colMeans(extract(fit$icarh, inc_warmup=F, pars="mu")$mu)
   Sigma = colMeans(extract(fit$icarh, inc_warmup=F, pars="Sigma")$Sigma)
-  XX = colMeans(extract(fit$icarh, inc_warmup=F, pars="XX")$XX)
+  XX = ifelse(is.na(fit$X), 
+              colMeans(extract(fit$icarh, inc_warmup=F, pars="XX")$XX),
+              fit$X)
   bin.groups = as.numeric(as.character(factor(fit$groups, levels=sort(unique(fit$groups), decreasing=T), labels=1:2 )))
   psi = list()
   for (i in 1:2) psi[[i]] = chol(Sigma[i,,])

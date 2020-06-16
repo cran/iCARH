@@ -31,7 +31,7 @@ defaults to 2. The effective sample size is always rounded to integers.}
 \item{...}{not used currently}
 }
 \value{
-contain summaries for for all chains. Included in the summaries are means, standard deviations (Est.Error), effective sample sizes (Eff.Sample), and split Rhats. 
+contain summaries for all chains. Included in the summaries are means, standard deviations (Est.Error), effective sample sizes (Eff.Sample), and split Rhats. 
 Monte Carlo standard errors (MC.Error) are also reported.
 }
 \description{

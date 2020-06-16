@@ -2,11 +2,11 @@
 library(iCARH)
 library(abind)
 
-Tp=4 # timepoints
-N=10 # number of samples
-J=14 # number of metabolites
-K=2  # number of bacteria species
-P=8  # number of pathways
+Tp=4L # timepoints
+N=10L # number of samples
+J=14L # number of metabolites
+K=2L # number of bacteria species
+P=8L  # number of pathways
 
 set.seed(12473)
 
@@ -27,6 +27,7 @@ XX = data.sim$XX
 Y = data.sim$Y
 Z = data.sim$Z
 pathways = data.sim$pathways
+XX[2,2,2] = NA #missing value example
 
 ## -----------------------------------------------------------------------------
 pathways.bin = lapply(pathways, function(x) { y=1/(x+1); diag(y)=0; y})
