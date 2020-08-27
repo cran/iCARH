@@ -11,13 +11,13 @@
 #'
 #' @examples keggid = list("C08363")
 #' iCARH.getPathwaysMat(keggid, "rno")
-#' \donttest{keggid = list("Unk1", "C00350","Unk2",c("C08363", "C00712"))
+#' \donttest{keggid = list("Unk1", "C00350",c("C08363", "C01245"))
 #' iCARH.getPathwaysMat(keggid, "rno")}
 #'
 #' @export iCARH.getPathwaysMat
 
 iCARH.getPathwaysMat = function(keggid, org){
-  if(length(keggid)<0) stop("Two compounds or more are needed.")
+  if(length(keggid)<1) stop("Two compounds or more are needed to build the adjacency matrix.")
   compoundPath = FindMetabolitePathways(unlist(keggid), org)
   if(is.null(compoundPath)){
     return(NULL)
@@ -64,7 +64,8 @@ FindMetabolitePathways = function(compoundM=NULL, organism_code=NULL){
   if(!is.null(compoundPath)){
     colnames(compoundPath) = c("KEGG compound", "pathway")
     compoundPath[,2] = as.character(gsub("path:map", paste0("path:",organism_code), compoundPath[,2]))
-    path.org = unique(convertTable(RCurl::getURL(paste0("http://rest.kegg.jp/link/pathway/",organism_code)))[,2]) # check pathways in the organism
+    aux = RCurl::getURL(paste0("http://rest.kegg.jp/link/pathway/",organism_code))
+    path.org = unique(convertTable(aux)[,2]) # check pathways in the organism
     compoundPath = compoundPath[compoundPath[,2]%in%path.org,, drop=F]
   }
   return(compoundPath)
@@ -106,8 +107,8 @@ MembershipFromPathways = function(compoundPath=NULL){
 
 #################### GetGraphPathway ####################
 GetGraphPathway = function(pathId){
-  file = paste("http://rest.kegg.jp/get/", pathId, "/kgml", sep = "")
-  pathkgml = KEGGgraph::parseKGML(RCurl::getURL(file))
+  file = RCurl::getURL(paste("http://rest.kegg.jp/get/", pathId, "/kgml", sep = ""))
+  pathkgml = KEGGgraph::parseKGML(file)
   reactions = suppressWarnings(KEGGgraph::KEGGpathway2reactionGraph(pathkgml))
   if(is.null(reactions)) return(NULL)
   inet = igraph::igraph.from.graphNEL(reactions)

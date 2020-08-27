@@ -172,7 +172,17 @@ iCARH.model = function(X, Y=NULL, drug, groups=NULL, pathways, tau=1.2, NA_value
   }
 
   stcode = glue_collapse(out)
-  fit = rstan::stan(model_name="iCARH",model_code = stcode, data = st_data, init=initf, pars=c("Xmis","Ymis"), include=F, ...)
+  fit = tryCatch (rstan::stan(model_name="iCARH",model_code = stcode, 
+                              data = st_data, init=initf, pars=c("Xmis","Ymis"), include=F, ...),
+                  warning = function(w) {
+                    print(paste("Stan warning:", w))
+                    return(NULL)
+                  },
+                  error = function(e) {
+                    print(paste("Stan error:", e))
+                    return(NULL)
+                  }
+                  )
   fit = list(icarh=fit, X=Xraw, Y=Yraw, drug=drug, groups=groups)
   class(fit) = "icarh"
   return(fit)

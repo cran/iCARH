@@ -92,7 +92,7 @@ rstan_options(auto_write = TRUE)
 options(mc.cores = 2)
 fit = iCARH.model(XX, Y, Z, groups=rep(c(0,1), each=5), pathways, 
 control = list(adapt_delta = 0.99, max_treedepth=10), iter = 2, chains = 2)
-if(!is.null(fit))
+if(!is.null(fit$icarh))
 gplot = iCARH.plotBeta(fit, indx=1:3, indy=1:2)}
 
 }

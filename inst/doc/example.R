@@ -12,15 +12,17 @@ set.seed(12473)
 
 ## ----real data, eval=F--------------------------------------------------------
 #  keggid = list("Unk1", "C03299","Unk2","Unk3",
-#   c("C08363", "C00712"),  # allowing multiple ids per metabolite
+#   c("C08363", "C00712")  # allowing multiple ids per metabolite
 #   )
-#   pathways = iCARH.GetPathwaysMat(keggid, "rno")
+#   pathways = iCARH.getPathwaysMat(keggid, "rno")
 
 ## ----pathways-----------------------------------------------------------------
-# Manually choose pathways
-path.names = c("path:map00564","path:map00590","path:map00061","path:map00591",
-               "path:map00592","path:map00600","path:map01040","path:map00563")
-data.sim = iCARH.simulate(Tp, N, J, P, K, path.names=path.names, Zgroupeff=c(0,4),
+# Example of manually picked pathways
+# path.names = c("path:map00564","path:map00590","path:map00061","path:map00591",
+#               "path:map00592","path:map00600","path:map01040","path:map00563")
+# Specify expected proportion of metabolites per pathway
+path.probs = 0.8
+data.sim = iCARH.simulate(Tp, N, J, P, K, path.probs = 0.8, Zgroupeff=c(0,4),
                           beta.val=c(1,-1,0.5, -0.5))
 
 XX = data.sim$XX
@@ -47,48 +49,48 @@ fit.sim = iCARH.model(XX, Y, Z, groups=rep(c(0,1), each=5), pathways = pathways,
 #                      iter = 2000, chains = 2, pars=c("YY","Xmis","Ymis"), include=F)
 
 ## -----------------------------------------------------------------------------
-if(!is.null(fit.sim)){
+if(!is.null(fit.sim$icarh)){
   rhats = iCARH.checkRhats(fit.sim)
 }
 
 ## -----------------------------------------------------------------------------
-if(!is.null(fit.sim)){
+if(!is.null(fit.sim$icarh)){
   gplot = iCARH.plotBeta(fit.sim)
   gplot
 }
 
 ## -----------------------------------------------------------------------------
-if(!is.null(fit.sim)){
+if(!is.null(fit.sim$icarh)){
   gplot = iCARH.plotTreatmentEffect(fit.sim)
   gplot
 }
 
 ## -----------------------------------------------------------------------------
-if(!is.null(fit.sim)){
+if(!is.null(fit.sim$icarh)){
   gplot = iCARH.plotPathwayPerturbation(fit.sim, path.names=names(data.sim$pathways))
   gplot
 }
 
 ## -----------------------------------------------------------------------------
-if(!is.null(fit.sim)){
+if(!is.null(fit.sim$icarh)){
   par(mfrow=c(1,2))
   iCARH.checkNormality(fit.sim)
 }
 
 ## -----------------------------------------------------------------------------
-if(!is.null(fit.sim)){
+if(!is.null(fit.sim$icarh)){
   waic = iCARH.waic(fit.sim)
   waic
 }
 
 ## -----------------------------------------------------------------------------
-if(!is.null(fit.sim)){
+if(!is.null(fit.sim$icarh)){
   mad = iCARH.mad(fit.sim)
   quantile(mad)
 }
 
 ## -----------------------------------------------------------------------------
-if(!is.null(fit.sim)){
+if(!is.null(fit.sim$icarh)){
   imp = iCARH.getDataImputation(fit.sim)
 }
 

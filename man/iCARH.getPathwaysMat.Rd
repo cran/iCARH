@@ -22,7 +22,9 @@ Returns a list of pathway adjacency matrices based on shortest paths.
 \examples{
 keggid = list("C08363")
 iCARH.getPathwaysMat(keggid, "rno")
-\donttest{keggid = list("Unk1", "C00350","Unk2",c("C08363", "C00712"))
-iCARH.getPathwaysMat(keggid, "rno")}
+gc()
+\donttest{keggid = list("Unk1", "C00350",c("C08363", "C01245"))
+iCARH.getPathwaysMat(keggid, "rno")
+gc()}
 
 }
